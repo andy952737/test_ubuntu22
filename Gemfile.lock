@@ -149,6 +149,8 @@ GEM
     nio4r (2.6.1)
     nokogiri (1.15.5-x86_64-darwin)
       racc (~> 1.4)
+    nokogiri (1.15.5-x86_64-linux)
+      racc (~> 1.4)
     psych (5.1.1.1)
       stringio
     public_suffix (5.0.4)
@@ -207,6 +209,7 @@ GEM
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
     sqlite3 (1.6.8-x86_64-darwin)
+    sqlite3 (1.6.8-x86_64-linux)
     sshkit (1.21.6)
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
@@ -236,6 +239,7 @@ GEM
 
 PLATFORMS
   x86_64-darwin-20
+  x86_64-linux
 
 DEPENDENCIES
   bootsnap
