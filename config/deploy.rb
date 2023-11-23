@@ -7,12 +7,28 @@ set :repo_url, "git@github.com:andy952737/test_ubuntu22.git"
 # Deploy to the user's home directory
 set :deploy_to, "/home/deploy/#{fetch :application}"
 
+set :linked_files, fetch(:linked_files, []).push('config/database.yml', 'config/secrets.yml')    
 append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', '.bundle', 'public/system', 'public/uploads'
 
 # Only keep the last 5 releases to save disk space
 set :keep_releases, 5
 
+set :rbenv_type, :user
+set :rbenv_ruby, '3.0.0'
 set :branch, ENV["REVISION"] || ENV["BRANCH_NAME"] || "main"      
+set :passenger_restart_with_touch, true    
+
+namespace :deploy do 
+    namespace :check do 
+      before :linked_files, :set_master_key do
+        on roles(:app), in: :sequence, wait: 10 do
+          unless test("[ -f #{shared_path}/config/master.key ]")
+            upload! 'config/master.key', "#{shared_path}/config/master.key"
+          end
+        end
+      end 
+    end
+end
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
